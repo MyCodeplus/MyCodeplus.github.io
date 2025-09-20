@@ -9,41 +9,49 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap');
         
+        :root {
+            --primary-color: #d81e06;
+            --secondary-color: #ffde59;
+        }
+        
         body {
             font-family: 'Noto Serif SC', serif;
-            background-color: #f8f1e9;
-            color: #333;
+            background-color: var(--primary-color);
+            color: white;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
             width: 100%;
-            max-width: 750px;
+            max-width: 100%;
             margin: 0 auto;
             position: relative;
-            aspect-ratio: 3/4;
+            aspect-ratio: 9/16;
             overflow: hidden;
-            background-color: #d81e06;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #b71c1c 100%);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .section {
             width: 100%;
             height: 100%;
-            padding: 2rem;
+            padding: 1.5rem;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #d81e06 0%, #b71c1c 100%);
-            color: #fff;
             position: absolute;
             top: 0;
             left: 0;
             opacity: 0;
             transition: opacity 0.5s ease;
+            overflow-y: auto;
         }
         
         .section.active {
@@ -53,18 +61,19 @@
         
         .page-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 2.5rem;
-            color: #ffde59;
-            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-            margin-bottom: 1.5rem;
-            position: relative;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            text-align: center;
         }
         
         .page-subtitle {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-align: center;
         }
         
         .decoration {
@@ -73,31 +82,31 @@
         }
         
         .lantern {
-            width: 60px;
-            height: 80px;
-            background-color: #d81e06;
+            width: 50px;
+            height: 70px;
+            background-color: var(--primary-color);
             border-radius: 50% 50% 5px 5px;
             position: relative;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
             animation: swing 3s infinite ease-in-out;
         }
         
         .lantern:before {
             content: '';
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #ffde59;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary-color);
             border-radius: 50%;
-            top: -5px;
-            left: 25px;
+            top: -4px;
+            left: 21px;
         }
         
         .lantern:after {
             content: '福';
             position: absolute;
-            color: #ffde59;
-            font-size: 24px;
+            color: var(--secondary-color);
+            font-size: 20px;
             font-weight: bold;
             top: 50%;
             left: 50%;
@@ -105,8 +114,8 @@
         }
         
         .plum-blossom {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" fill="%23ffde59"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
@@ -114,27 +123,28 @@
         }
         
         .btn {
-            background-color: #ffde59;
-            color: #d81e06;
-            padding: 1.2rem 2.4rem;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
             border-radius: 50px;
             font-weight: bold;
             text-decoration: none;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-width: 120px;
-            min-height: 44px;
+            min-width: 100px;
+            min-height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
         }
         
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
         
         .btn:active {
@@ -143,32 +153,33 @@
         
         .content-text {
             text-align: center;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            max-width: 80%;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            max-width: 90%;
         }
         
         .schedule-item {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
-            width: 80%;
+            margin-bottom: 0.8rem;
+            width: 90%;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .schedule-item:hover {
             background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(10px);
+            transform: translateX(5px);
         }
         
         .schedule-time {
             font-weight: bold;
-            color: #ffde59;
-            min-width: 80px;
+            color: var(--secondary-color);
+            min-width: 60px;
         }
         
         .schedule-desc {
@@ -178,33 +189,34 @@
         .gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            width: 90%;
-            margin: 1rem auto;
+            gap: 0.8rem;
+            width: 95%;
+            margin: 0.8rem auto;
         }
         
         .gallery-item {
             aspect-ratio: 1;
             background-size: cover;
             background-position: center;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
         
         .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.03);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
         .contact-info {
             text-align: center;
-            margin: 1rem 0;
-            line-height: 1.8;
+            margin: 0.8rem 0;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
         
         .contact-link {
-            color: #ffde59;
+            color: var(--secondary-color);
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -214,18 +226,19 @@
         }
         
         .form-group {
-            margin-bottom: 1rem;
-            width: 80%;
+            margin-bottom: 0.8rem;
+            width: 90%;
         }
         
         .form-input {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.9rem;
             border-radius: 50px;
             border: none;
             background-color: rgba(255, 255, 255, 0.9);
             font-family: inherit;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .form-input:focus {
@@ -244,12 +257,12 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .fade-in {
-            animation: fadeIn 1s ease forwards;
+            animation: fadeIn 0.8s ease forwards;
         }
         
         .delay-1 { animation-delay: 0.2s; }
@@ -260,92 +273,123 @@
         
         .bird {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" fill="%23ffde59"/></svg>');
             background-size: contain;
-            animation: fly 15s linear infinite;
+            animation: fly 12s linear infinite;
             opacity: 0.7;
         }
         
         @keyframes fly {
-            0% { transform: translateX(-50px) translateY(0); }
-            50% { transform: translateX(calc(100vw + 50px)) translateY(-50px); }
-            100% { transform: translateX(calc(100vw + 50px)) translateY(0); }
+            0% { transform: translateX(-40px) translateY(0); }
+            50% { transform: translateX(calc(100vw + 40px)) translateY(-40px); }
+            100% { transform: translateX(calc(100vw + 40px)) translateY(0); }
         }
 
         .address-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 1rem 0;
+            margin: 0.8rem 0;
         }
 
         .navigation-address {
-            color: #ffde59;
+            color: var(--secondary-color);
             text-decoration: none;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
         }
 
         .detail-address {
-            color: #fff;
-            font-size: 0.9rem;
-        }
-
-        .map-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .map-modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .map-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 90%;
-            max-height: 90%;
-            overflow: auto;
-        }
-
-        .map-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
             color: white;
-            font-size: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .law-office-image {
+            width: 90%;
+            height: 200px;
+            background-size: cover;
+            background-position: center 30%;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
             cursor: pointer;
+            object-fit: cover;
+        }
+
+        .law-office-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 响应式调整 */
+        @media (min-width: 640px) {
+            .container {
+                max-width: 375px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .content-text, .contact-info {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 1.2rem 2.4rem;
+                font-size: 1rem;
+            }
+            
+            .schedule-item {
+                font-size: 1rem;
+            }
+            
+            .law-office-image {
+                height: 250px;
+            }
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- 装饰元素 -->
-        <div class="decoration lantern" style="top: 20px; left: 20px;"></div>
-        <div class="decoration lantern" style="top: 20px; right: 20px; animation-delay: 0.5s;"></div>
-        <div class="decoration plum-blossom" style="top: 30px; left: 100px;"></div>
-        <div class="decoration plum-blossom" style="top: 40px; right: 120px; animation-delay: 0.3s;"></div>
-        <div class="decoration plum-blossom" style="bottom: 30px; left: 80px; animation-delay: 0.7s;"></div>
-        <div class="decoration plum-blossom" style="bottom: 40px; right: 90px; animation-delay: 0.9s;"></div>
+        <div class="decoration lantern" style="top: 15px; left: 15px;"></div>
+        <div class="decoration lantern" style="top: 15px; right: 15px; animation-delay: 0.5s;"></div>
+        <div class="decoration plum-blossom" style="top: 25px; left: 80px;"></div>
+        <div class="decoration plum-blossom" style="top: 30px; right: 90px; animation-delay: 0.3s;"></div>
+        <div class="decoration plum-blossom" style="bottom: 25px; left: 70px; animation-delay: 0.7s;"></div>
+        <div class="decoration plum-blossom" style="bottom: 30px; right: 80px; animation-delay: 0.9s;"></div>
         
         <div class="bird" style="top: 15%; animation-delay: 0s;"></div>
-        <div class="bird" style="top: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
-        <div class="bird" style="top: 35%; animation-delay: 6s; animation-duration: 12s;"></div>
+        <div class="bird" style="top: 25%; animation-delay: 3s; animation-duration: 15s;"></div>
+        <div class="bird" style="top: 35%; animation-delay: 6s; animation-duration: 10s;"></div>
         
         <!-- 邀请函首页 -->
         <section id="home" class="section active">
@@ -424,17 +468,22 @@
                 <div class="address-container fade-in delay-1">
                     <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
                        class="navigation-address" 
-                       target="_blank"
-                       id="mapLink">
-                        <i class="fas fa-map-marker-alt"></i> 杭州市钱塘区金沙大道30号
+                       target="_blank">
+                        <i class="fas fa-map-marker-alt"></i> 导航地址：杭州市钱塘区金沙大道30号
                     </a>
-                    <div class="detail-address">盈都大厦1号楼901室（地铁高沙路站）</div>
+                    <div class="detail-address">详细地址：盈都大厦1号楼901室（地铁高沙路站）</div>
                 </div>
             </div>
             
-            <div style="width: 80%; height: 200px; background-color: rgba(255,255,255,0.2); border-radius: 10px; margin: 1rem 0;" class="fade-in delay-2">
-                <!-- 这里可以放置地图 -->
-            </div>
+            <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
+               class="law-office-image fade-in delay-2" 
+               style="background-image: url('https://space.coze.cn/s/5127e0YE3ac/?width_height=1700x1003');"
+               target="_blank">
+                <div style="background-color: rgba(0,0,0,0.5); padding: 0.5rem 1rem; border-radius: 20px;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 1.2rem; margin-right: 0.3rem;"></i>
+                    <span>点击查看地图</span>
+                </div>
+            </a>
             
             <a href="#register" class="btn fade-in delay-3">在线报名</a>
         </section>
@@ -462,20 +511,9 @@
         </section>
     </div>
 
-    <!-- 地图弹窗 -->
-    <div class="map-modal" id="mapModal">
-        <div class="map-close" id="closeMapModal">&times;</div>
-        <div class="map-content">
-            <h3>杭州市钱塘区金沙大道30号</h3>
-            <p>盈都大厦1号楼901室（地铁高沙路站）</p>
-            <p>如果地图应用未自动打开，请访问：</p>
-            <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
-               target="_blank"
-               style="color: #4f46e5; text-decoration: underline;">
-                https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)
-            </a>
-        </div>
-    </div>
+    <footer>
+        <p>created by <a href="https://space.coze.cn" target="_blank">coze space</a> | 页面内容均由 AI 生成，仅供参考</p>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -521,26 +559,6 @@
                     el.style.opacity = 1;
                     el.style.transform = 'translateY(0)';
                 }, delay);
-            });
-
-            // 地图链接处理
-            const mapLink = document.getElementById('mapLink');
-            const mapModal = document.getElementById('mapModal');
-            const closeMapModal = document.getElementById('closeMapModal');
-
-            mapLink.addEventListener('click', function(e) {
-                // 尝试直接打开地图应用
-                const opened = window.open(this.href, '_blank');
-                
-                // 如果浏览器阻止了弹出窗口，则显示备用方案
-                if (!opened || opened.closed || typeof opened.closed == 'undefined') {
-                    e.preventDefault();
-                    mapModal.classList.add('active');
-                }
-            });
-
-            closeMapModal.addEventListener('click', function() {
-                mapModal.classList.remove('active');
             });
         });
     </script>
