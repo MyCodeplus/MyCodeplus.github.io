@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>乔迁之喜邀请函</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f8f1e9;
+            color: #333;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background-color: #d81e06;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #d81e06 0%, #b71c1c 100%);
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .section.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #ffde59;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+        
+        .decoration {
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .lantern {
+            width: 60px;
+            height: 80px;
+            background-color: #d81e06;
+            border-radius: 50% 50% 5px 5px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: swing 3s infinite ease-in-out;
+        }
+        
+        .lantern:before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffde59;
+            border-radius: 50%;
+            top: -5px;
+            left: 25px;
+        }
+        
+        .lantern:after {
+            content: '福';
+            position: absolute;
+            color: #ffde59;
+            font-size: 24px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .plum-blossom {
+            width: 40px;
+            height: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" fill="%23ffde59"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: sway 4s infinite ease-in-out;
+        }
+        
+        .btn {
+            background-color: #ffde59;
+            color: #d81e06;
+            padding: 1.2rem 2.4rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .content-text {
+            text-align: center;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 80%;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            width: 80%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+        
+        .schedule-time {
+            font-weight: bold;
+            color: #ffde59;
+            min-width: 80px;
+        }
+        
+        .schedule-desc {
+            flex: 1;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 90%;
+            margin: 1rem auto;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin: 1rem 0;
+            line-height: 1.8;
+        }
+        
+        .contact-link {
+            color: #ffde59;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+            width: 80%;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.5);
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(-3deg) translateY(0); }
+            50% { transform: rotate(3deg) translateY(-5px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+        
+        .bird {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50 Z" fill="%23ffde59"/></svg>');
+            background-size: contain;
+            animation: fly 15s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes fly {
+            0% { transform: translateX(-50px) translateY(0); }
+            50% { transform: translateX(calc(100vw + 50px)) translateY(-50px); }
+            100% { transform: translateX(calc(100vw + 50px)) translateY(0); }
+        }
+
+        .address-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .navigation-address {
+            color: #ffde59;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-address {
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .map-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .map-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .map-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+        }
+
+        .map-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 装饰元素 -->
+        <div class="decoration lantern" style="top: 20px; left: 20px;"></div>
+        <div class="decoration lantern" style="top: 20px; right: 20px; animation-delay: 0.5s;"></div>
+        <div class="decoration plum-blossom" style="top: 30px; left: 100px;"></div>
+        <div class="decoration plum-blossom" style="top: 40px; right: 120px; animation-delay: 0.3s;"></div>
+        <div class="decoration plum-blossom" style="bottom: 30px; left: 80px; animation-delay: 0.7s;"></div>
+        <div class="decoration plum-blossom" style="bottom: 40px; right: 90px; animation-delay: 0.9s;"></div>
+        
+        <div class="bird" style="top: 15%; animation-delay: 0s;"></div>
+        <div class="bird" style="top: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+        <div class="bird" style="top: 35%; animation-delay: 6s; animation-duration: 12s;"></div>
+        
+        <!-- 邀请函首页 -->
+        <section id="home" class="section active">
+            <h1 class="page-title fade-in">乔迁之喜·恭贺光临</h1>
+            <p class="page-subtitle fade-in delay-1">INVITATION</p>
+            <div class="content-text fade-in delay-2">
+                诚挚邀请您莅临我们的新址<br>
+                共同见证这一重要时刻
+            </div>
+            <a href="#invitation" class="btn fade-in delay-3">查看详情</a>
+        </section>
+        
+        <!-- 诚挚邀请页 -->
+        <section id="invitation" class="section">
+            <h1 class="page-title fade-in">诚挚邀请</h1>
+            <div class="content-text fade-in delay-1">
+                今逢乔迁之喜，新址承旧志，焕新再出发。<br>
+                承蒙各位同仁、合作伙伴一直以来的支持与厚爱，<br>
+                我们诚挚邀请您莅临新址，共同见证这一重要时刻。
+            </div>
+            <a href="#schedule" class="btn fade-in delay-2">活动流程</a>
+        </section>
+        
+        <!-- 活动流程页 -->
+        <section id="schedule" class="section">
+            <h1 class="page-title fade-in">活动流程</h1>
+            
+            <div class="schedule-item fade-in">
+                <div class="schedule-time">8:30</div>
+                <div class="schedule-desc">来宾签到入场</div>
+            </div>
+            <div class="schedule-item fade-in delay-1">
+                <div class="schedule-time">8:58</div>
+                <div class="schedule-desc">隆重剪彩仪式</div>
+            </div>
+            <div class="schedule-item fade-in delay-2">
+                <div class="schedule-time">9:10</div>
+                <div class="schedule-desc">主任开场致辞</div>
+            </div>
+            <div class="schedule-item fade-in delay-3">
+                <div class="schedule-time">9:15</div>
+                <div class="schedule-desc">嘉宾代表发言</div>
+            </div>
+            <div class="schedule-item fade-in delay-4">
+                <div class="schedule-time">9:25</div>
+                <div class="schedule-desc">全体合影留念</div>
+            </div>
+            <div class="schedule-item fade-in delay-5">
+                <div class="schedule-time">11:30</div>
+                <div class="schedule-desc">午宴正式开始</div>
+            </div>
+            
+            <a href="#gallery" class="btn fade-in delay-3">新所展示</a>
+        </section>
+        
+        <!-- 新所展示页 -->
+        <section id="gallery" class="section">
+            <h1 class="page-title fade-in">新所展示</h1>
+            
+            <div class="gallery">
+                <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/BOSY6Yr0ccs/?width_height=590x788');"></div>
+                <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/Bv3ix7LBFRQ/?width_height=609x791');"></div>
+                <div class="gallery-item fade-in delay-2" style="background-image: url('https://space.coze.cn/s/CWEnLsI3-5k/?width_height=588x780');"></div>
+                <div class="gallery-item fade-in delay-3" style="background-image: url('https://space.coze.cn/s/C7Uk-Dd-Oc4/?width_height=590x785');"></div>
+            </div>
+            
+            <a href="#contact" class="btn fade-in delay-4">联系我们</a>
+        </section>
+        
+        <!-- 联系我们页 -->
+        <section id="contact" class="section">
+            <h1 class="page-title fade-in">联系我们</h1>
+            
+            <div class="contact-info fade-in">
+                <p><i class="fas fa-phone-alt"></i> 电话：13175099187（张律师）</p>
+                <div class="address-container fade-in delay-1">
+                    <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
+                       class="navigation-address" 
+                       target="_blank"
+                       id="mapLink">
+                        <i class="fas fa-map-marker-alt"></i> 杭州市钱塘区金沙大道30号
+                    </a>
+                    <div class="detail-address">盈都大厦1号楼901室（地铁高沙路站）</div>
+                </div>
+            </div>
+            
+            <div style="width: 80%; height: 200px; background-color: rgba(255,255,255,0.2); border-radius: 10px; margin: 1rem 0;" class="fade-in delay-2">
+                <!-- 这里可以放置地图 -->
+            </div>
+            
+            <a href="#register" class="btn fade-in delay-3">在线报名</a>
+        </section>
+        
+        <!-- 在线报名页 -->
+        <section id="register" class="section">
+            <h1 class="page-title fade-in">在线报名</h1>
+            
+            <form class="fade-in" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="form-group fade-in">
+                    <input type="text" class="form-input" placeholder="您的姓名" required>
+                </div>
+                <div class="form-group fade-in delay-1">
+                    <input type="tel" class="form-input" placeholder="联系方式" required>
+                </div>
+                <div class="form-group fade-in delay-2">
+                    <input type="number" class="form-input" placeholder="参与人数" min="1" required>
+                </div>
+                <div class="form-group fade-in delay-3">
+                    <textarea class="form-input" placeholder="留言备注" rows="3" style="border-radius: 15px;"></textarea>
+                </div>
+                
+                <button type="submit" class="btn fade-in delay-4">提交报名</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- 地图弹窗 -->
+    <div class="map-modal" id="mapModal">
+        <div class="map-close" id="closeMapModal">&times;</div>
+        <div class="map-content">
+            <h3>杭州市钱塘区金沙大道30号</h3>
+            <p>盈都大厦1号楼901室（地铁高沙路站）</p>
+            <p>如果地图应用未自动打开，请访问：</p>
+            <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
+               target="_blank"
+               style="color: #4f46e5; text-decoration: underline;">
+                https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化页面显示
+            document.getElementById('home').classList.add('active');
+            
+            // 导航切换
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        // 隐藏所有section
+                        document.querySelectorAll('.section').forEach(section => {
+                            section.classList.remove('active');
+                        });
+                        
+                        // 显示目标section
+                        targetSection.classList.add('active');
+                        
+                        // 平滑滚动到顶部
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 自动播放动画
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(el => {
+                const delay = el.classList.contains('delay-1') ? 200 : 
+                              el.classList.contains('delay-2') ? 400 :
+                              el.classList.contains('delay-3') ? 600 :
+                              el.classList.contains('delay-4') ? 800 :
+                              el.classList.contains('delay-5') ? 1000 : 0;
+                
+                setTimeout(() => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'translateY(0)';
+                }, delay);
+            });
+
+            // 地图链接处理
+            const mapLink = document.getElementById('mapLink');
+            const mapModal = document.getElementById('mapModal');
+            const closeMapModal = document.getElementById('closeMapModal');
+
+            mapLink.addEventListener('click', function(e) {
+                // 尝试直接打开地图应用
+                const opened = window.open(this.href, '_blank');
+                
+                // 如果浏览器阻止了弹出窗口，则显示备用方案
+                if (!opened || opened.closed || typeof opened.closed == 'undefined') {
+                    e.preventDefault();
+                    mapModal.classList.add('active');
+                }
+            });
+
+            closeMapModal.addEventListener('click', function() {
+                mapModal.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
