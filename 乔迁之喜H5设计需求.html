@@ -186,6 +186,7 @@
             flex: 1;
         }
         
+        /* 图片画廊样式 */
         .gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -201,6 +202,7 @@
             border-radius: 8px;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .gallery-item:hover {
@@ -208,6 +210,38 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
+        /* 图片放大模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
         .contact-info {
             text-align: center;
             margin: 0.8rem 0;
@@ -225,25 +259,27 @@
             text-decoration: underline;
         }
         
-        .form-group {
-            margin-bottom: 0.8rem;
+        .law-office-image {
             width: 90%;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 0.7rem 0.9rem;
-            border-radius: 50px;
-            border: none;
-            background-color: rgba(255, 255, 255, 0.9);
-            font-family: inherit;
-            transition: all 0.3s ease;
+            height: 200px;
+            background-size: cover;
+            background-position: center 30%;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            object-fit: cover;
         }
         
-        .form-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.5);
+        .law-office-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
         @keyframes swing {
@@ -305,29 +341,6 @@
         .detail-address {
             color: white;
             font-size: 0.85rem;
-        }
-
-        .law-office-image {
-            width: 90%;
-            height: 200px;
-            background-size: cover;
-            background-position: center 30%;
-            border-radius: 8px;
-            margin: 0.8rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            object-fit: cover;
-        }
-
-        .law-office-image:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         /* 响应式调整 */
@@ -449,11 +462,20 @@
         <section id="gallery" class="section">
             <h1 class="page-title fade-in">新所展示</h1>
             
+            <!-- 图片画廊 -->
             <div class="gallery">
-                <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/BOSY6Yr0ccs/?width_height=590x788');"></div>
-                <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/Bv3ix7LBFRQ/?width_height=609x791');"></div>
-                <div class="gallery-item fade-in delay-2" style="background-image: url('https://space.coze.cn/s/CWEnLsI3-5k/?width_height=588x780');"></div>
-                <div class="gallery-item fade-in delay-3" style="background-image: url('https://space.coze.cn/s/C7Uk-Dd-Oc4/?width_height=590x785');"></div>
+                <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773')"></div>
+                <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276')"></div>
+                <div class="gallery-item fade-in delay-2" style="background-image: url('https://space.coze.cn/s/3c-k7153HWY/?width_height=1280x1707'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3c-k7153HWY/?width_height=1280x1707')"></div>
+                <div class="gallery-item fade-in delay-3" style="background-image: url('https://space.coze.cn/s/3xmjdIKprY0/?width_height=1280x1707'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3xmjdIKprY0/?width_height=1280x1707')"></div>
+                <div class="gallery-item fade-in delay-4" style="background-image: url('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506')"></div>
+                <div class="gallery-item fade-in delay-5" style="background-image: url('https://space.coze.cn/s/4cJf5ATWAX8/?width_height=584x785'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/4cJf5ATWAX8/?width_height=584x785')"></div>
+            </div>
+            
+            <!-- 图片放大模态框 -->
+            <div id="imageModal" class="modal" onclick="closeModal()">
+                <span class="close-modal">&times;</span>
+                <img class="modal-content" id="modalImage">
             </div>
             
             <a href="#contact" class="btn fade-in delay-4">联系我们</a>
@@ -485,29 +507,8 @@
                 </div>
             </a>
             
-            <a href="#register" class="btn fade-in delay-3">在线报名</a>
-        </section>
-        
-        <!-- 在线报名页 -->
-        <section id="register" class="section">
-            <h1 class="page-title fade-in">在线报名</h1>
-            
-            <form id="invitationForm" class="fade-in">
-                <div class="form-group fade-in">
-                    <input type="text" class="form-input" placeholder="您的姓名" name="name" required>
-                </div>
-                <div class="form-group fade-in delay-1">
-                    <input type="tel" class="form-input" placeholder="联系方式" name="phone" required>
-                </div>
-                <div class="form-group fade-in delay-2">
-                    <input type="number" class="form-input" placeholder="参与人数" name="people" min="1" required>
-                </div>
-                <div class="form-group fade-in delay-3">
-                    <textarea class="form-input" placeholder="留言备注" name="notes" rows="3" style="border-radius: 15px;"></textarea>
-                </div>
-                
-                <button type="submit" class="btn fade-in delay-4">提交报名</button>
-            </form>
+            <!-- 直接链接到腾讯文档表单 -->
+            <a href="https://docs.qq.com/form/page/DWnJzTWd4RFFySUNS" class="btn fade-in delay-3" target="_blank">在线报名</a>
         </section>
     </div>
 
@@ -545,51 +546,24 @@
                     }
                 });
             });
-            
-            // 表单提交处理
-            document.getElementById('invitationForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // 获取表单数据
-                const formData = {
-                    name: this.name.value,
-                    phone: this.phone.value,
-                    people: this.people.value,
-                    notes: this.notes.value,
-                    createdAt: new Date().toLocaleString()
-                };
-                
-                // LeanCloud配置（已填入您提供的信息）
-                const APP_ID = "5hVPuBe0aVtjijQymVBOmdco-gzGzoHsz";
-                const APP_KEY = "4cuFjXVWEVjLz3pqjgPxNtsw";
-                const SERVER_URL = "https://5hvpube0.lc-cn-n1-shared.com";
-                
-                // 发送数据到LeanCloud
-                fetch(`${SERVER_URL}/1.1/classes/Guestbook`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-LC-Id': APP_ID,
-                        'X-LC-Key': APP_KEY,
-                        'X-LC-Session': 'anonymous'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.objectId) {
-                        alert('提交成功！感谢您的参与');
-                        this.reset(); // 清空表单
-                    } else {
-                        alert('提交失败，请稍后重试');
-                    }
-                })
-                .catch(error => {
-                    console.error('错误：', error);
-                    alert('提交失败：' + error.message);
-                });
-            });
         });
+        
+        // 图片放大模态框功能
+        function openModal(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = imageUrl;
+            // 阻止模态框内部点击事件冒泡
+            modalImg.onclick = function(e) {
+                e.stopPropagation();
+            };
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
     </script>
 </body>
 </html>
