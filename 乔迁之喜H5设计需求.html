@@ -179,32 +179,57 @@
             max-width: 90%;
         }
         
-        .schedule-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            width: 90%;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-        
-        .schedule-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-        
-        .schedule-time {
-            font-weight: bold;
-            color: var(--secondary-color);
-            min-width: 60px;
-        }
-        
-        .schedule-desc {
-            flex: 1;
-        }
+        /* 活动流程样式调整 */
+.schedule {
+  width: 90%;
+  margin: 1rem auto;
+}
+
+.schedule-title {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.schedule-time {
+  font-weight: bold;
+  color: var(--secondary-color);
+  min-width: 50px;
+  text-align: right;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* 竖线分隔样式 */
+.schedule-divider {
+  width: 1px;
+  height: 1.2em;
+  background-color: var(--secondary-color);
+  opacity: 0.7;
+  margin: 0 0.5rem;
+}
+
+.schedule-desc {
+  flex: 1;
+  text-align: left;
+  font-size: 0.8rem;
+}
+
+/* 响应式调整 */
+@media (min-width: 640px) {
+  .schedule-time,
+  .schedule-desc {
+    font-size: 0.9rem;
+  }
+}
         
         /* 图片画廊样式 */
         .gallery {
@@ -470,13 +495,19 @@
 <body>
     <!-- 1. 背景音乐元素 - 请替换为您的背景音乐 -->
     <audio id="backgroundMusic" loop preload="auto" volume="0.3">
-        <source src="好运来.mp3" type="audio/mpeg">
+        <source src="音频/好运来.mp3" type="audio/mpeg">
     </audio>
     
     <!-- 2. 烟花爆炸音效元素 - 请替换为您的爆炸音效 -->
     <audio id="fireworkSound" preload="auto" volume="0.5">
-        <source src="烟花爆炸.mp3" type="audio/mpeg">
+        <source src="音频/烟花爆炸.mp3" type="audio/mpeg">
     </audio>
+    
+    <!-- 音频启用提示 -->
+    <div class="audio-tip" id="audioTip">
+        <i class="fas fa-music"></i>
+        <span>点击页面任意位置启用音效</span>
+    </div>
     
     <!-- 音频控制按钮 -->
     <div class="audio-controls" id="audioControl">
@@ -512,56 +543,74 @@
         <section id="invitation" class="section">
             <h1 class="page-title fade-in">诚挚邀请</h1>
             <div class="content-text fade-in delay-1">
-                今逢乔迁之喜，新址承旧志，焕新再出发。<br>
-                承蒙各位同仁、合作伙伴一直以来的支持与厚爱，<br>
-                我们诚挚邀请您莅临新址，共同见证这一重要时刻。
+                今逢乔迁之喜 新址承旧志 焕新再出发。<br>
+                <div class="gallery">
+               <div class="gallery-item fade-in delay-4" style="background-image: url('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506')"></div>
+                
+              <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773')"></div>
+                <br>
+                </div>
+                承蒙各位同仁、合作伙伴一直以来的支持与厚爱<br>
+                诚邀您拨冗莅临，共赏新境、同话过往、畅叙未来<br>
+                让我们以新址为起点，续写更多温暖与荣光
+            </div>
+            <!-- 图片放大模态框 -->
+            <div id="imageModal" class="modal" onclick="closeModal()">
+                <span class="close-modal">×</span>
+                <img class="modal-content" id="modalImage" alt="放大查看的图片">
             </div>
             <a href="#schedule" class="btn fade-in delay-2">活动流程</a>
         </section>
         
-        <!-- 活动流程页 -->
-        <section id="schedule" class="section">
-            <h1 class="page-title fade-in">活动流程</h1>
-            
-            <div class="schedule-item fade-in">
-                <div class="schedule-time">8:30</div>
-                <div class="schedule-desc">来宾签到入场</div>
-            </div>
-            <div class="schedule-item fade-in delay-1">
-                <div class="schedule-time">8:58</div>
-                <div class="schedule-desc">隆重剪彩仪式</div>
-            </div>
-            <div class="schedule-item fade-in delay-2">
-                <div class="schedule-time">9:10</div>
-                <div class="schedule-desc">主任开场致辞</div>
-            </div>
-            <div class="schedule-item fade-in delay-3">
-                <div class="schedule-time">9:15</div>
-                <div class="schedule-desc">嘉宾代表发言</div>
-            </div>
-            <div class="schedule-item fade-in delay-4">
-                <div class="schedule-time">9:25</div>
-                <div class="schedule-desc">全体合影留念</div>
-            </div>
-            <div class="schedule-item fade-in delay-5">
-                <div class="schedule-time">11:30</div>
-                <div class="schedule-desc">午宴正式开始</div>
-            </div>
-            
-            <a href="#gallery" class="btn fade-in delay-3">新所展示</a>
-        </section>
+       <!-- 活动流程页 -->
+<section id="schedule" class="section">
+  <h1 class="page-title fade-in">活动流程</h1>
+  
+  <div class="schedule">
+    <div class="schedule-item fade-in">
+      <div class="schedule-time">8:30</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">来宾签到入场</div>
+    </div>
+    <div class="schedule-item fade-in delay-1">
+      <div class="schedule-time">8:58</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">隆重剪彩仪式</div>
+    </div>
+    <div class="schedule-item fade-in delay-2">
+      <div class="schedule-time">9:10</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">主任开场致辞</div>
+    </div>
+    <div class="schedule-item fade-in delay-3">
+      <div class="schedule-time">9:15</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">嘉宾代表发言</div>
+    </div>
+    <div class="schedule-item fade-in delay-4">
+      <div class="schedule-time">9:25</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">全体合影留念</div>
+    </div>
+    <div class="schedule-item fade-in delay-5">
+      <div class="schedule-time">11:30</div>
+      <div class="schedule-divider"></div>
+      <div class="schedule-desc">午宴正式开始</div>
+    </div>
+  </div>
+  
+  <a href="#gallery" class="btn fade-in delay-3">新所展示</a>
+</section>
         
         <!-- 新所展示页 -->
         <section id="gallery" class="section">
             <h1 class="page-title fade-in">新所展示</h1>
             
-            <!-- 图片画廊 - 恢复原始图片链接 -->
+            
             <div class="gallery">
-                <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773')"></div>
-                <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276')"></div>
                 <div class="gallery-item fade-in delay-2" style="background-image: url('https://space.coze.cn/s/3c-k7153HWY/?width_height=1280x1707'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3c-k7153HWY/?width_height=1280x1707')"></div>
                 <div class="gallery-item fade-in delay-3" style="background-image: url('https://space.coze.cn/s/3xmjdIKprY0/?width_height=1280x1707'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3xmjdIKprY0/?width_height=1280x1707')"></div>
-                <div class="gallery-item fade-in delay-4" style="background-image: url('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/4FQGPbuO6sI/?width_height=1279x1506')"></div>
+                <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276')"></div>
                 <div class="gallery-item fade-in delay-5" style="background-image: url('https://space.coze.cn/s/4cJf5ATWAX8/?width_height=584x785'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/4cJf5ATWAX8/?width_height=584x785')"></div>
             </div>
             
@@ -582,9 +631,9 @@
                 <p><i class="fas fa-phone-alt"></i> 电话：13175099187（张律师）</p>
                 <div class="address-container fade-in delay-1">
                     <a href="https://uri.amap.com/marker?position=120.338598,30.305687&amp;name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" class="navigation-address" target="_blank">
-                        <i class="fas fa-map-marker-alt"></i> 导航地址：杭州市钱塘区金沙大道30号
+                        <i class="fas fa-map-marker-alt"></i> 导航地址：杭州市钱塘区金沙大道30号（地铁高沙路站）
                     </a>
-                    <div class="detail-address">详细地址：盈都大厦1号楼901室（地铁高沙路站）</div>
+                    <div class="detail-address">详细地址：盈都大厦1号楼901室</div>
                 </div>
             </div>
             
@@ -619,7 +668,7 @@
             let isPlaying = false;
             
             // 显示音频启用提示
-            audioTip.classList.add('show');
+            
             
             // 隐藏提示条
             function hideAudioTip() {
