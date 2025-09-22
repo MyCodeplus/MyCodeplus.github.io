@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>乔迁之喜邀请函</title>
+    <title>乔迁之喜·恭贺光临</title>
     <script src="https://cdn.tailwindcss.com/3.3.3"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
@@ -16,14 +16,15 @@
         
         body {
             font-family: 'Noto Serif SC', serif;
-            background-color: var(--primary-color);
+            background-color: #f8f1e9;
             color: white;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
         }
         
         .container {
@@ -35,6 +36,25 @@
             overflow: hidden;
             background: linear-gradient(135deg, var(--primary-color) 0%, #b71c1c 100%);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 烟花样式 */
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .firework-trail {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+            transform-origin: bottom center;
+            z-index: 9;
+            pointer-events: none;
         }
         
         .section {
@@ -299,6 +319,7 @@
         
         .fade-in {
             animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
         }
         
         .delay-1 { animation-delay: 0.2s; }
@@ -382,15 +403,92 @@
             text-align: center;
             padding: 0.5rem;
             font-size: 0.8rem;
+            width: 100%;
+            max-width: 375px;
+            box-sizing: border-box;
+            margin-top: 1rem;
+            border-radius: 8px;
         }
         
         footer a {
             color: var(--secondary-color);
             text-decoration: none;
         }
+
+        /* 音频控制样式 */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .audio-controls:hover {
+            transform: scale(1.1);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .audio-icon {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+        
+        /* 音频提示样式 */
+        .audio-tip {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .audio-tip.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
+    <!-- 1. 背景音乐元素 - 请替换为您的背景音乐 -->
+    <audio id="backgroundMusic" loop preload="auto" volume="0.3">
+        <source src="音频/好运来.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 2. 烟花爆炸音效元素 - 请替换为您的爆炸音效 -->
+    <audio id="fireworkSound" preload="auto" volume="0.5">
+        <source src="音频/烟花爆炸.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 音频启用提示 -->
+    <div class="audio-tip" id="audioTip">
+        <i class="fas fa-music"></i>
+        <span>点击页面任意位置启用音效</span>
+    </div>
+    
+    <!-- 音频控制按钮 -->
+    <div class="audio-controls" id="audioControl">
+        <i class="fas fa-play audio-icon" id="audioIcon"></i>
+    </div>
+    
     <div class="container">
         <!-- 装饰元素 -->
         <div class="decoration lantern" style="top: 15px; left: 15px;"></div>
@@ -462,7 +560,7 @@
         <section id="gallery" class="section">
             <h1 class="page-title fade-in">新所展示</h1>
             
-            <!-- 图片画廊 -->
+            <!-- 图片画廊 - 恢复原始图片链接 -->
             <div class="gallery">
                 <div class="gallery-item fade-in" style="background-image: url('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/2z0nvGwonts/?width_height=2364x1773')"></div>
                 <div class="gallery-item fade-in delay-1" style="background-image: url('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276'); cursor: pointer;" onclick="openModal('https://space.coze.cn/s/3HdRQI2RHwc/?width_height=1700x1276')"></div>
@@ -474,8 +572,8 @@
             
             <!-- 图片放大模态框 -->
             <div id="imageModal" class="modal" onclick="closeModal()">
-                <span class="close-modal">&times;</span>
-                <img class="modal-content" id="modalImage">
+                <span class="close-modal">×</span>
+                <img class="modal-content" id="modalImage" alt="放大查看的图片">
             </div>
             
             <a href="#contact" class="btn fade-in delay-4">联系我们</a>
@@ -488,19 +586,15 @@
             <div class="contact-info fade-in">
                 <p><i class="fas fa-phone-alt"></i> 电话：13175099187（张律师）</p>
                 <div class="address-container fade-in delay-1">
-                    <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
-                       class="navigation-address" 
-                       target="_blank">
+                    <a href="https://uri.amap.com/marker?position=120.338598,30.305687&amp;name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" class="navigation-address" target="_blank">
                         <i class="fas fa-map-marker-alt"></i> 导航地址：杭州市钱塘区金沙大道30号
                     </a>
                     <div class="detail-address">详细地址：盈都大厦1号楼901室（地铁高沙路站）</div>
                 </div>
             </div>
             
-            <a href="https://uri.amap.com/marker?position=120.338598,30.305687&name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" 
-               class="law-office-image fade-in delay-2" 
-               style="background-image: url('https://space.coze.cn/s/5127e0YE3ac/?width_height=1700x1003'); background-position: center 30%;"
-               target="_blank">
+            <!-- 恢复原始办公室图片 -->
+            <a href="https://uri.amap.com/marker?position=120.338598,30.305687&amp;name=杭州市钱塘区金沙大道30号(高沙路地铁站A口旁)" class="law-office-image fade-in delay-2" style="background-image: url('https://space.coze.cn/s/5127e0YE3ac/?width_height=1700x1003'); background-position: center 30%;" target="_blank">
                 <div style="background-color: rgba(0,0,0,0.5); padding: 0.5rem 1rem; border-radius: 20px;">
                     <i class="fas fa-map-marked-alt" style="font-size: 1.2rem; margin-right: 0.3rem;"></i>
                     <span>点击查看地图</span>
@@ -520,6 +614,75 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 初始化页面显示
             document.getElementById('home').classList.add('active');
+            
+            // 音频元素和控制
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const fireworkSound = document.getElementById('fireworkSound');
+            const audioControl = document.getElementById('audioControl');
+            const audioIcon = document.getElementById('audioIcon');
+            const audioTip = document.getElementById('audioTip');
+            let isPlaying = false;
+            
+            // 显示音频启用提示
+            audioTip.classList.add('show');
+            
+            // 隐藏提示条
+            function hideAudioTip() {
+                audioTip.classList.remove('show');
+            }
+            
+            // 播放/暂停背景音乐
+            function toggleMusic() {
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    audioIcon.classList.remove('fa-pause');
+                    audioIcon.classList.add('fa-play');
+                } else {
+                    backgroundMusic.play().then(() => {
+                        audioIcon.classList.remove('fa-play');
+                        audioIcon.classList.add('fa-pause');
+                    }).catch(e => {
+                        console.log('播放失败，需要用户交互:', e);
+                    });
+                }
+                isPlaying = !isPlaying;
+            }
+            
+            // 播放烟花音效
+            function playFireworkSound() {
+                if (!isPlaying) return;
+                
+                try {
+                    fireworkSound.currentTime = 0;
+                    fireworkSound.play().catch(e => {
+                        console.log('烟花音效播放失败:', e);
+                    });
+                } catch (e) {
+                    console.error('播放音效出错:', e);
+                }
+            }
+            
+            // 音频控制按钮点击事件
+            audioControl.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMusic();
+                hideAudioTip();
+            });
+            
+            // 点击页面任意位置启用音频
+            document.body.addEventListener('click', function enableAudio() {
+                if (!isPlaying) {
+                    backgroundMusic.play().then(() => {
+                        isPlaying = true;
+                        audioIcon.classList.remove('fa-play');
+                        audioIcon.classList.add('fa-pause');
+                        hideAudioTip();
+                    }).catch(e => {
+                        console.log('需要用户交互才能播放音频:', e);
+                    });
+                }
+                document.body.removeEventListener('click', enableAudio);
+            }, { once: true });
             
             // 导航切换
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -543,27 +706,185 @@
                             top: 0,
                             behavior: 'smooth'
                         });
+                        
+                        // 尝试播放音乐
+                        if (!isPlaying) {
+                            backgroundMusic.play().then(() => {
+                                isPlaying = true;
+                                audioIcon.classList.remove('fa-play');
+                                audioIcon.classList.add('fa-pause');
+                                hideAudioTip();
+                            }).catch(e => {});
+                        }
                     }
                 });
             });
+            
+            // 图片放大模态框功能
+            window.openModal = function(imageUrl) {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                modal.style.display = 'flex';
+                modalImg.src = imageUrl;
+                modalImg.alt = "放大查看的图片";
+                
+                // 阻止模态框内部点击事件冒泡
+                modalImg.onclick = function(e) {
+                    e.stopPropagation();
+                };
+            }
+            
+            window.closeModal = function() {
+                const modal = document.getElementById('imageModal');
+                modal.style.display = 'none';
+            }
+            
+            // 烟花效果代码
+            const fireworkColors = [
+                '#ff3864', '#ffdd57', '#23d16b', '#00d1b2', '#613dc1', 
+                '#ff9f1c', '#e76f51', '#f4a261', '#e9c46a', '#2a9d8f'
+            ];
+            
+            // 发射烟花（从底部升起）
+            function launchFirework() {
+                if (!document.querySelector('.section.active')) return;
+                
+                const container = document.querySelector('.container');
+                const containerHeight = container.offsetHeight;
+                
+                // 创建烟花弹
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                
+                // 创建尾迹
+                const trail = document.createElement('div');
+                trail.classList.add('firework-trail');
+                
+                // 随机水平位置（5%-95%宽度）
+                const startX = Math.random() * 90 + 5;
+                // 从底部开始
+                const startY = 100;
+                
+                // 随机颜色
+                const color = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
+                firework.style.backgroundColor = color;
+                firework.style.left = `${startX}%`;
+                firework.style.top = `${startY}%`;
+                
+                // 设置尾迹
+                trail.style.left = `${startX}%`;
+                trail.style.top = `${startY}%`;
+                trail.style.height = '0px';
+                
+                container.appendChild(trail);
+                container.appendChild(firework);
+                
+                // 随机爆炸高度（10%-80%高度）
+                const explosionY = Math.random() * 70 + 10;
+                // 上升动画持续时间（1-2秒）
+                const duration = 1000 + Math.random() * 1000;
+                
+                const startTime = Date.now();
+                
+                // 上升动画
+                function animateRise() {
+                    const currentTime = Date.now();
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // 计算当前位置（缓动上升）
+                    const currentY = startY - (startY - explosionY) * progress;
+                    
+                    // 更新烟花位置
+                    firework.style.top = `${currentY}%`;
+                    
+                    // 更新尾迹长度
+                    trail.style.height = `${(startY - currentY) * (containerHeight / 100)}px`;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateRise);
+                    } else {
+                        // 到达爆炸点，移除尾迹，触发爆炸
+                        container.removeChild(trail);
+                        explodeFirework(firework, color);
+                    }
+                }
+                
+                requestAnimationFrame(animateRise);
+            }
+            
+            // 烟花爆炸效果
+            function explodeFirework(firework, color) {
+                // 播放爆炸音效
+                playFireworkSound();
+                
+                // 爆炸粒子数量为50-80个
+                const particlesCount = 50 + Math.floor(Math.random() * 31);
+                const container = document.querySelector('.container');
+                
+                // 移除原始烟花
+                firework.remove();
+                
+                // 创建爆炸粒子
+                for (let i = 0; i < particlesCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('firework');
+                    particle.style.backgroundColor = color;
+                    particle.style.left = firework.style.left;
+                    particle.style.top = firework.style.top;
+                    
+                    // 随机粒子大小
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    container.appendChild(particle);
+                    
+                    // 随机方向和距离
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 80 + 30;
+                    const destX = Math.cos(angle) * distance;
+                    const destY = Math.sin(angle) * distance;
+                    
+                    // 动画
+                    particle.style.transition = `all ${Math.random() * 1 + 0.5}s ease-out`;
+                    
+                    setTimeout(() => {
+                        particle.style.transform = `translate(${destX}px, ${destY}px)`;
+                        particle.style.opacity = '0';
+                    }, 10);
+                    
+                    // 移除粒子
+                    setTimeout(() => {
+                        if (particle.parentNode === container) {
+                            container.removeChild(particle);
+                        }
+                    }, 1500);
+                }
+            }
+            
+            // 定时发射烟花（每1-3秒生成5-6个）
+            function startFireworks() {
+                function createBatch() {
+                    // 每次生成5-6个烟花
+                    const count = Math.floor(Math.random() * 2) + 5;
+                    for (let i = 0; i < count; i++) {
+                        // 每个烟花之间有微小延迟，避免完全重叠
+                        setTimeout(launchFirework, i * 200);
+                    }
+                    
+                    // 1-3秒后再次生成一批
+                    setTimeout(createBatch, 1000 + Math.random() * 2000);
+                }
+                
+                // 启动烟花效果
+                createBatch();
+            }
+            
+            // 页面加载完成后开始烟花效果
+            window.addEventListener('load', startFireworks);
         });
-        
-        // 图片放大模态框功能
-        function openModal(imageUrl) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'flex';
-            modalImg.src = imageUrl;
-            // 阻止模态框内部点击事件冒泡
-            modalImg.onclick = function(e) {
-                e.stopPropagation();
-            };
-        }
-        
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            modal.style.display = 'none';
-        }
     </script>
 </body>
 </html>
+    
